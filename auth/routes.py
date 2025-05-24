@@ -28,7 +28,7 @@ def permission_required(permissions):
 def login():
     if request.method == "POST":
         username = request.form["username"]
-        passwort = request.form["password"]
+        password = request.form["password"]
         option = request.form["submit"]
         if option == "cancel":
             return redirect(url_for("main.index"))
