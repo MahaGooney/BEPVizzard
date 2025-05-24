@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+
+    <title>Break-Even-Point-Rechner</title>
+</head>
+
+
+<body>
+    <nav>
+        <ul>
+            <li><a href="{{url_for('main.index')}}">Home</a></li>
+            <li><a href="{{url_for('main.bep')}}">BEP-Rechner</a></li>
+            <div class="nav-r">
+                {% if current_user.is_admin %}
+                <li><a href="{{url_for('auth.userlist')}}">Userlist</a></li>
+                {% endif %}
+                
+                {% if current_user.is_authenticated %}
+                <li class="dropbtn">Angemeldet als: {{ current_user.name }}
+                    <ul>
+                        <li><a href="{{url_for('auth.logout')}}">Abmelden</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li><a href="{{url_for('auth.login')}}">Login</a></li>
+                {% endif %}
+            </div>
+        </ul>
+    </nav>
+
+    <main>
+        {% block messages %}
+
+        {% endblock %}
+        
+
+
+        {% block content %}
+        
+        {% endblock %}
+    </main>
+    
+</body>
+</html>
