@@ -4,9 +4,10 @@ DROP TABLE IF EXISTS 'role';
 
 CREATE TABLE 'BEP' (
     'id' INT NOT NULL AUTOINCREMENT,
-    'fixkosten'
-    'varkosten'
-    'verkaufspreis'
+    'fixkosten' INT,
+    'varkosten' INT,
+    'verkaufspreis' INT,
+    'menge' INT,
 )
 
 CREATE TABLE 'role' (

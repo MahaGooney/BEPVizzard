@@ -13,7 +13,7 @@
     <nav>
         <ul>
             <li><a href="{{url_for('main.index')}}">Home</a></li>
-            <li><a href="{{url_for('main.bep')}}">BEP-Rechner</a></li>
+            <li><a href="{{url_for('main.bep_calc')}}">BEP-Rechner</a></li>
             <div class="nav-r">
                 {% if current_user.is_admin %}
                 <li><a href="{{url_for('auth.userlist')}}">Userlist</a></li>
