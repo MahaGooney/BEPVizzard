@@ -7,7 +7,17 @@ from colorama import Fore, Back, Style
 
 from auth.datamodel import init_auth_db
 
+from extensions import db
+
 class BEP:
+    __tablename__ = 'bep'
+    id = db.Column(db.Integer, primary_key=True)
+    fixkosten = db.Column(db.Float, nullable=False)
+    variable_kosten = db.Column(db.Float, nullable=False)
+    menge = db.Column(db.Float, nullable=False)
+    preis = db.Column(db.Float, nullable=False)
+
+
     def __init__(self, id=None, fixkosten=None, variable_kosten=None, menge=None, preis=None):
         self.id = id
         self.fixkosten = fixkosten
@@ -17,20 +27,26 @@ class BEP:
 
     @staticmethod
     def get_by_id(id):
-        pass
+        return BEP.query.get(id)
 
     @staticmethod
     def get_all():
-        pass
+        return BEP.query.all()
 
     def delete(id):
-        pass
+        bep = BEP.get_by_id(id)
+        if bep:
+            db.session.delete(bep)
+            db.session.commit()
+        else:
+            raise ValueError(f"BEP with id {id} does not exist.")
 
     def save(self):
-        pass
-
-    def update(self):
-        pass
+        if self.id is None:
+            db.session.add(self)
+        else:
+            db.session.merge(self)
+        db.session.commit()
         
 
 

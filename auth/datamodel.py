@@ -3,15 +3,11 @@
 from enum import IntFlag, auto
 from flask import Flask, g, current_app
 from flask_login import UserMixin, AnonymousUserMixin
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 
-from . import login_manager
+from extensions import db
 
-# Hier wird die SQLite DB mit der App verbunden.
-app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///bep.db"
-db = SQLAlchemy(app)
+from . import login_manager
 
 
 @login_manager.user_loader
@@ -25,7 +21,7 @@ class Permission(IntFlag):
     BEP_history     = auto()
 
 
-class Role:
+class Role(db.Model):
     __tablename__ = 'role'
     id =db.Column(db.String(20), primary_key = True)
     permissions = db.Column(db.Integer, nullable = False)
@@ -36,12 +32,12 @@ class Role:
     def init_roles(): 
         roles = {
             'Anonymous':    Permission.BEP,
-            'Admin':        Permission.Admin | Permission.BEP | Permission.BEP_history,
+            'Admin':        Permission.ADMIN | Permission.BEP | Permission.BEP_history,
             'User':         Permission.BEP | Permission.BEP_history
         } # Dictionarys welche Rolle welche Rechte bekommt
         standard_role = 'Anonymous' # Standardrolle wird auf Anonymous festgelegt
         for role, permissions in roles.items(): # Anlegen aller Rollen im Dictionary
-            r = Role.get(role)
+            r = Role.get_by_name(role)
             if r is None:  # Prüfung ob die Rolle schon existiert
                 r=Role(name=role)
             r.name = role
@@ -59,14 +55,20 @@ class Role:
 
     @staticmethod
     def get_by_name(name):
-        pass
+        return Role.query.get(name)
 
     @staticmethod
     def get_all():
-        pass    
+          return Role.query.all()
 
     def save(self, commit=True):
-        pass
+        if self.id is None:
+            self.id = self.name
+            db.session.add(self)
+        else:
+            db.session.merge(self)
+        if commit:
+            db.session.commit()
 
     def can(self, permission):
         print(f"Role.can called with {permission = }")
@@ -91,7 +93,7 @@ class Role:
 
     @property
     def usercount(self):
-        pass 
+        return Role.query.filter_by(role_id=self.id).count()
 
     @usercount.setter
     def usercount(self, value):
@@ -100,7 +102,7 @@ class Role:
 
 
     
-class User:
+class User(UserMixin, db.Model):
     __tablename__ = 'user'
     id =db.Column(db.Integer, primary_key = True, autoincrement = True)
     name = db.Column(db.String(40), nullable = False)
@@ -124,23 +126,30 @@ class User:
 
     @staticmethod
     def get_by_id(id):
-        pass
+        return User.query.get(id)
 
     def get_by_name(name):
-        pass
+        return User.query.filter_by(name=name).first()
 
     def get_by_email(email):
-        pass
+        return User.query.filter_by(email=email).first()
 
     @staticmethod
     def get_all():
-        pass
+        return User.query.all()
 
     def save(self):
-        pass
+        if self.id is None:
+            db.session.add(self)
+        else:
+            db.session.merge(self)
+        db.session.commit()
 
     def delete(self):
-        pass
+        if self.role.name != "Anonymous":
+            assert self.role.usercount > 1, f"Der User {self.name} ist der letzte Nutzer mit der Rolle {self.role.name} und kann nicht gelöscht werden."
+        db.session.delete(self)
+        db.session.commit()
 
     def can(self, permission):
         return self.role.can(permission)
@@ -191,7 +200,7 @@ class AnonymousUser(AnonymousUserMixin):
     def __init__(self):
         self.name = "Anonymous"
         self.email = "anonymous@email.com"
-        self.role = Role.get("Anonymous")
+        self.role = Role.get_by_name("Anonymous")
 
     def can(self, permission):
         return False

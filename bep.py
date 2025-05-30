@@ -2,9 +2,9 @@
 
 import os 
 from flask import Flask, request
+from extensions import db
+from config import Config
 
-def init_config(app, test_config=None):
-    pass
 
 def create_instance_path(app):
     try:
@@ -24,9 +24,16 @@ def init_blueprints(app):
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
-    init_config(app, test_config)
+
+    app.config.from_object(Config)
+    db.init_app(app)
+
     create_instance_path(app)
     init_blueprints(app)
+
+    with app.app_context():
+        db.create_all()
+
     return app
 
 if __name__ == "__main__":
