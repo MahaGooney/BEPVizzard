@@ -1,5 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
+<table>
+    <div id="buttons_users">
+        <button type="button" id="btn_new" class="btn_users" onclick="location.href=`{{url_for('auth.add_user')}}`;"></button>
+        <button type="button" id="btn_refresh" class="btn_users" onclick="location.href=`{{url_for('auth.userlist')}}`;"></button>
+    </div>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Rolle</th>
+            <th id="ak">Aktionen</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for u in content %}
+        <tr>
+            <td>{{u.name}}</td>
+            <td>{{u.email}}</td>
+            <td>{{u.role.name}}</td>
+            <td>
+                <a href="{{url_for('auth.edit_user', id=u.id)}}" id="btnedit" class="btnedit" title="bearbeiten"></a>
+                <a href="{{url_for('auth.delete_user', id=u.id)}}" 
+                   id="btndelete" 
+                   class="button danger" 
+                   title="löschen"
+                   data-message="Wollen Sie den Nutzer {{u.name}} wirklich löschen?">
+                </a>
+                <a href="{{url_for('auth.reset_password', id=u.id)}}"
+                   class="button danger"
+                   title="Passwort zurücksetzen"
+                   id = "btn_reset"
+                   data-message="Wollen Sie das Passwort für {{u.name}} wirklich zurücksetzen?"
+                   ></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}

@@ -1,5 +1,43 @@
-{% extends "base.html" %}
-
+{% extends "base.html"%}
 {% block content %}
+<form class="form" action="#" method="POST">
+    {% if user %}
+    <p class="input"><label for="userid">User ID:</label>
+        <input disabled id="userid" name="userid" value="{{ user.id }}">
+    </p>
+    {% endif %}
 
+    <label for="name">
+        <input class="input" type="text" id="name" name="name" value="{% if user %}{{ user.name }}{% endif %}"
+            placeholder="" title="Geben Sie einen Benutzernamen ein. Dieser muss eindeutig sein.">
+        <span>Name:</span>
+    </label>
+    <label for="email">
+        <input class="input" id="email" name="email" value="{% if user %}{{ user.email }}{% endif %}" type="email"
+            placeholder="" title="Geben Sie die email des Nutzers ein. Diese muss eindeutig sein.">
+        <span>Email:</span>
+    </label>
+    <label for="role">
+        <select class="input" id="role" name="role">
+            {% for r in roles %}
+            <option value="{{r.name}}" {% if user %} {% if r.name==user.role.name %}selected{% endif %} {% else %} {% if
+                r.default==True %}selected{% endif %} {% endif %}>
+                {{r.name}}</option>
+            {% endfor %}
+        </select>
+        <span>Benutzerrolle:</span>
+    </label>
+
+
+    <p class="buttonrow">
+        <button id="confirm" name="submit" value="save">
+            {%if user %}
+            Änderungen speichern
+            {% else %}
+            Benutzer hinzufügen
+            {% endif %}
+        </button>
+        <button id="cancel" name="submit" value="cancel">Abbruch</button>
+    </p>
+</form>
 {% endblock %}
