@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,14 +19,16 @@
                 {% if current_user.is_admin %}
                 <li><a href="{{url_for('auth.userlist')}}">Userlist</a></li>
                 {% endif %}
-                
+
                 {% if current_user.is_authenticated %}
                 <li class="dropbtn">Angemeldet als: {{ current_user.name }}
                     <ul>
+                        <li><a href="{{url_for('auth.change_password')}}">Passwort ändern</a></li>
                         <li><a href="{{url_for('auth.logout')}}">Abmelden</a></li>
                     </ul>
                 </li>
                 {% else %}
+                <li><a href="{{url_for('auth.register')}}">Register</a></li>
                 <li><a href="{{url_for('auth.login')}}">Login</a></li>
                 {% endif %}
             </div>
@@ -35,14 +38,36 @@
     <main>
         {% block messages %}
 
+        <div id="messages">
+            {% for type,message in get_flashed_messages(with_categories=True) %}
+            <!-- From Uiverse.io by andrew-demchenk0 -->
+            <div class="flash-{{type}}">
+                <div class="flash_icon_container">
+                    <span class="flash_icon-{{type}}"></span>
+                </div>
+                <div class="flash_message">{{ message }}</div>
+                <div class="flash_close"><svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 20 20"
+                        height="20">
+                        <path fill="#393a37"
+                            d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z">
+                        </path>
+                    </svg></div>
+            </div>
+            {% endfor %}
+        </div>
+
+
+
         {% endblock %}
-        
+
 
 
         {% block content %}
-        
+
         {% endblock %}
     </main>
-    
+    <script src="{{url_for('static', filename='js/bep.js')}}">
+    </script>
 </body>
+
 </html>

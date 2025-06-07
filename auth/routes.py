@@ -197,4 +197,4 @@ def change_email():
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():
-    pass
+    return render_template("register.html", title="Register")

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<br><br>
+
+<form class="form" method="POST" action="#">
+    <span class="input-span">
+        <label for="username" class="label"> Username</label>
+        <input type="text" name="username" id="username" autofocus />
+    </span>
+    <span class="input-span">
+        <label for="email" class="label">Email </label>
+        <input type="email" name="email" id="email" autofocus />
+    </span>
+    <span class="input-span">
+        <label for="password" class="label">Password</label>
+        <input type="password" name="password" id="password" />
+    </span>
+    <br>
+    <input class="submit" type="submit" value="Register" name="submit" />
+    <span class="span">Already have an account? <a href="{{url_for('auth.login')}}">Login</a></span>
+</form>
+{% endblock %}
