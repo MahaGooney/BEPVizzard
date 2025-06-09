@@ -1,23 +1,26 @@
 {% extends "base.html"%}
 {% block content %}
+<br><br>
+
 <form class="form" action="#" method="POST">
     {% if user %}
-    <p class="input"><label for="userid">User ID:</label>
-        <input disabled id="userid" name="userid" value="{{ user.id }}">
-    </p>
+    <h2>Edit User: {{user.id}}</h2>
+    {% else %}
+    <h2>Neuen Benutzer hinzufügen</h2>
     {% endif %}
-
-    <label for="name">
-        <input class="input" type="text" id="name" name="name" value="{% if user %}{{ user.name }}{% endif %}"
-            placeholder="" title="Geben Sie einen Benutzernamen ein. Dieser muss eindeutig sein.">
-        <span>Name:</span>
-    </label>
-    <label for="email">
+    <span class="input-span">
+        <label for="username" class="label">Name</label>
+        <input class="input" type="text" id="username" name="name" value="{% if user %}{{ user.name }}{% endif %}"
+            placeholder="" title="Geben Sie einen Benutzernamen ein. Dieser muss eindeutig sein." autofocus>
+    </span>
+    <span class="input-span">
+        <label for="email" class="label">Email</label>
         <input class="input" id="email" name="email" value="{% if user %}{{ user.email }}{% endif %}" type="email"
             placeholder="" title="Geben Sie die email des Nutzers ein. Diese muss eindeutig sein.">
-        <span>Email:</span>
-    </label>
-    <label for="role">
+    </span>
+    <span class="input-span">
+        <label for="role" class="label">Benutzerrolle</label>
+        <div class="custom-select">
         <select class="input" id="role" name="role">
             {% for r in roles %}
             <option value="{{r.name}}" {% if user %} {% if r.name==user.role.name %}selected{% endif %} {% else %} {% if
@@ -25,19 +28,15 @@
                 {{r.name}}</option>
             {% endfor %}
         </select>
-        <span>Benutzerrolle:</span>
-    </label>
-
-
-    <p class="buttonrow">
-        <button id="confirm" name="submit" value="save">
-            {%if user %}
-            Änderungen speichern
-            {% else %}
-            Benutzer hinzufügen
-            {% endif %}
-        </button>
-        <button id="cancel" name="submit" value="cancel">Abbruch</button>
-    </p>
+        </div>
+    </span>
+    <button id="confirm" name="submit" value="save" class="submit">
+        {%if user %}
+        Änderungen speichern
+        {% else %}
+        Benutzer hinzufügen
+        {% endif %}
+    </button>
+    <button id="cancel" name="submit" value="cancel" class="cancel">Abbruch</button>
 </form>
 {% endblock %}

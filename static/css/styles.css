@@ -17,6 +17,13 @@ html {
             #1a1a1a 75%,
             #1a1a1a);
     background-size: 40px 40px;
+
+    --bg-light: #707070;
+    --bg-mid: #505050;
+    --bg-dark: #212121;
+    --bg-nav: #333;
+    --clr-accent: #58bc82;
+    --clr-text: white;
 }
 
 
@@ -24,6 +31,8 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     margin: 0;
     padding: 0;
+    min-width: 750px;
+    min-height: 750px;
 }
 
 
@@ -32,7 +41,7 @@ nav {
     position: relative;
     width: 100%;
     height: 60px;
-    background-color: #333;
+    background-color: var(--bg-nav);
     align-content: center;
 }
 
@@ -41,14 +50,16 @@ nav ul {
     margin: 0;
     padding: 0;
     overflow: hidden;
-    border-left: 3px solid #333;
-    border-right: 3px solid #333;
 }
 
 nav>ul li {
     padding: 14px 15px;
-    color: white;
+    color: var(--clr-text);
     float: left;
+    border: none;
+    border-radius: 15px;
+    min-width: 80px;
+    text-align: center;
 }
 
 nav>ul>li {
@@ -61,7 +72,9 @@ nav>ul>li {
 }
 
 nav>ul li:hover {
-    background-color: black;
+    background-color: var(--clr-accent);
+    border: none;
+    border-radius: 15px;
 }
 
 nav>ul li>ul {
@@ -71,7 +84,7 @@ nav>ul li>ul {
 nav>ul li:hover>ul {
     display: block;
     position: absolute;
-    background-color: #333;
+    background-color: var(--bg-nav);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     margin: 14px -16px;
@@ -80,31 +93,32 @@ nav>ul li:hover>ul {
     z-index: 1;
 }
 
-.dropbtn ul li {
-    width: 100%;
-    text-align: left;
+.dropbtn {
+    width: 190px;
 }
 
+.dropbtn ul {
+    border: none;
+    width: 220px;
+    border-radius: 15px;
+}
 
-nav>ul li a:hover {
-    color: white;
+.dropbtn ul li {
+    width: 190px;
+    text-align: center;
 }
 
 nav ul li:active {
-    background-color: white;
-}
-
-nav ul li:active a {
-    color: black;
+    background-color: var(--bg-light);
 }
 
 nav ul a {
     text-decoration: none;
-    color: white;
 }
 
-nav ul a:visited {
-    color: inherit;
+nav #signout li:hover{
+    background-color: red;
+
 }
 
 /* Flash Messages */
@@ -132,19 +146,23 @@ nav ul a:visited {
 }
 
 .flash-success {
-    background: #339900;
+    --clr-success:#339900; 
+    background: var(--clr-success);
 }
 
 .flash-danger {
-    background: #cc3300;
+    --clr-danger:#cc3300;
+    background: var(--clr-danger);
 }
 
 .flash-warning {
-    background: #ff9966;
+    --clr-warning: #ff9966;
+    background: var(--clr-warning);
 }
 
 .flash-info {
-    background: #00c8ff;
+    --clr-info: #00c8ff;
+    background: var(--clr-info);
 }
 
 .flash_icon_container {
@@ -160,28 +178,28 @@ nav ul a:visited {
 
 .flash_icon-success::after {
     content: "\2713";
-    color: white;
+    color: var(--clr-text);
     font-size: 20px;
     justify-content: center;
 }
 
 .flash_icon-danger::after {
     content: "\26A0";
-    color: white;
+    color: var(--clr-text);
     font-size: 20px;
     justify-content: center;
 }
 
 .flash_icon-warning::after {
     content: "\26A0";
-    color: white;
+    color: var(--clr-text);
     font-size: 20px;
     justify-content: center;
 }
 
 .flash_icon-info::after {
     content: "\2139";
-    color: white;
+    color: var(--clr-text);
     font-size: 20px;
     justify-content: center;
 }
@@ -189,7 +207,7 @@ nav ul a:visited {
 .flash_message {
     font-weight: 500;
     font-size: 15px;
-    color: #fff;
+    color: var(--clr-text);
 }
 
 .flash_close {
@@ -200,27 +218,30 @@ nav ul a:visited {
 }
 
 .flash_close path {
-    fill: #fff;
+    fill: var(--clr-text);
 }
 
 
-/* Formulare (Login/Register/changePW/) */
+/* Formulare (Login/Register/changePW/edituser/newuser) */
 .form {
     margin: 0 auto;
     padding: 2rem 3rem;
     background: #212121;
     border-radius: 1rem;
 
-    --bg-light: #efefef;
-    --bg-dark: #707070;
-    --clr: #58bc82;
-    --clr-alpha: #9c9c9c60;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
     width: 100%;
     max-width: 300px;
+}
+
+.form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--clr-accent);
 }
 
 .form .input-span {
@@ -232,27 +253,31 @@ nav ul a:visited {
 
 .form input#username,
 .form input[type="password"],
-.form input[type="email"] {
+.form input[type="email"],
+.form select,
+.form .select-selected {
     border-radius: 0.5rem;
     padding: 1rem 0.75rem;
     border: none;
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    background-color: var(--clr-alpha);
-    outline: 2px solid var(--bg-dark);
-    color: white;
+    background-color: var(--bg-mid);
+    outline: 2px solid var(--bg-light);
+    color: var(--clr-text);
 }
 
 .form input#username:focus,
 .form input[type="password"]:focus,
-.form input[type="email"]:focus {
-    outline: 2px solid var(--clr);
+.form input[type="email"]:focus,
+.form select:focus,
+.form .select-selected:focus {
+    outline: 2px solid var(--clr-accent);
 }
 
 .label {
     align-self: flex-start;
-    color: var(--clr);
+    color: var(--clr-accent);
     font-weight: 600;
 }
 
@@ -263,8 +288,8 @@ nav ul a:visited {
     align-items: center;
     gap: 0.5rem;
     border-radius: 3rem;
-    background-color: var(--bg-dark);
-    color: var(--bg-light);
+    background-color: var(--bg-light);
+    color: var(--clr-text);
     border: none;
     cursor: pointer;
     transition: all 300ms;
@@ -280,8 +305,7 @@ nav ul a:visited {
 }
 
 .form .submit:hover {
-    background-color: var(--clr);
-    color: var(--bg-dark);
+    background-color: var(--clr-accent);
 }
 
 .form .cancel {
@@ -291,8 +315,8 @@ nav ul a:visited {
     align-items: center;
     gap: 0.5rem;
     border-radius: 3rem;
-    background-color: var(--bg-dark);
-    color: var(--bg-light);
+    background-color: var(--bg-light);
+    color: var(--clr-text);
     border: none;
     cursor: pointer;
     transition: all 300ms;
@@ -303,14 +327,384 @@ nav ul a:visited {
 
 .form .cancel:hover {
     background-color: red;
-    color: var(--bg-dark);
 }
 
 .span {
     text-decoration: none;
-    color: var(--bg-dark);
+    color: var(--bg-light);
 }
 
 .span a {
-    color: var(--clr);
+    color: var(--clr-accent);
+}
+
+/* selectbox */
+.custom-select select {
+    width: 100%;
+    display: none;
+}
+
+.custom-select {
+    position: relative;
+    font-family: Arial;
+    margin-bottom: 2rem;
+}
+
+/* Style the arrow inside the select element: */
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 24px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: white transparent transparent transparent;
+}
+
+/* Point the arrow upwards when the select box is open (active): */
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 16px;
+}
+
+/* style the items (options), including the selected item: */
+.select-items div,
+.select-selected {
+    color: var(--clr-text);
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    background-color: var(--bg-mid);
+}
+
+/* Style items (options): */
+.select-items {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    border-radius: 0.5rem;
+    border: none;
+    background-color: var(--clr-accent);
+    outline: 2px solid var(--clr-accent);
+    color: var(--clr-text);
+}
+
+/* Hide the items when the select box is closed: */
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+/* Tabellen */
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+}
+
+th {
+    height: 50px;
+    background-color: var(--bg-dark);
+    color: var(--clr-accent);
+}
+
+td {
+    text-align: center;
+}
+
+tr {
+    width: 100%;
+    background-color: var(--bg-light);
+    color: var(--clr-text);
+}
+
+tr:nth-child(even) {
+    background-color: var(--bg-mid);
+}
+
+th,
+td {
+    padding: 7px;
+}
+
+#ak {
+    width: 180px;
+    min-width: 180px;
+
+}
+
+/* Buttons der Benutzerliste  */
+#buttons_users {
+    margin-top: 10px;
+    display: flex;
+    border-radius: 10px;
+}
+
+.btn_users {
+    border: 1px solid var(--bg-nav);
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: var(--bg-nav);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--clr-accent);
+    transition: all ease-in-out 0.3s;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn_users:hover {
+    transition-duration: .3s;
+    background-color: var(--clr-accent);
+    align-items: center;
+    color: var(--clr-text);
+}
+
+#btn_new::after {
+    content: "\002B";
+    font-size: 20px;
+}
+
+#btn_new:hover::after {
+    content: "Neuer User";
+    font-size: 15px;
+}
+
+#btn_refresh::after {
+    content: "\27f3";
+    font-size: 20px;
+}
+
+#btn_refresh:hover::after {
+    content: "Refresh";
+    font-size: 15px;
+}
+
+#btn_new:hover::after,
+#btn_refresh:hover::after {
+    color: var(--clr-text);
+}
+
+/* Buttons zum bearbeiten der Benutzer */
+.btnedit {
+    content: \270E;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--bg-nav);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    float: left;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    transition-duration: .3s;
+    overflow: hidden;
+    position: relative;
+    color: var(--clr-accent);
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.btnedit:hover {
+    transition-duration: .3s;
+    background-color: #ffa500;
+    align-items: center;
+}
+
+.btnedit::after {
+    content: "\270E";
+    font-size: 20px;
+}
+
+.btnedit:hover::after {
+    content: "";
+}
+
+.btnedit::before {
+    position: absolute;
+    top: -13px;
+    content: "Edit";
+    color: var(--clr-text);
+    transition-duration: .3s;
+    font-size: 2px;
+}
+
+.btnedit:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    transform: translateY(30px);
+    transition-duration: .3s;
+}
+
+#btndelete {
+    content: "\1F5D1";
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--bg-nav);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    float: left;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    cursor: pointer;
+    transition-duration: .3s;
+    overflow: hidden;
+    position: relative;
+    color: var(--clr-accent);
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+#btndelete:hover {
+    transition-duration: .3s;
+    background-color: red;
+    align-items: center;
+}
+
+#btndelete::after {
+    content: "\1F5D1";
+    font-size: 20px;
+}
+
+#btndelete:hover::after {
+    content: "";
+}
+
+#btndelete::before {
+    position: absolute;
+    top: -13px;
+    content: "Delete";
+    color: var(--clr-text);
+    transition-duration: .3s;
+    font-size: 2px;
+}
+
+#btndelete:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    transform: translateY(30px);
+    transition-duration: .3s;
+}
+
+#btn_reset {
+    content: \21ba;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--bg-nav);
+    border: none;
+    font-weight: 600;
+    display: flex;
+    float: left;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+    transition-duration: .3s;
+    overflow: hidden;
+    position: relative;
+    color: var(--clr-accent);
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+#btn_reset:hover {
+    transition-duration: .3s;
+    background-color: red;
+    align-items: center;
+}
+
+#btn_reset::after {
+    content: "\21ba";
+    font-size: 20px;
+}
+
+#btn_reset:hover::after {
+    content: "";
+}
+
+#btn_reset::before {
+    position: absolute;
+    top: -13px;
+    content: "Reset";
+    color: var(--clr-text);
+    transition-duration: .3s;
+    font-size: 2px;
+}
+
+#btn_reset:hover::before {
+    font-size: 13px;
+    opacity: 1;
+    transform: translateY(30px);
+    transition-duration: .3s;
+}
+
+
+/* Profile Page */
+
+.settings-container {
+    margin: 0 auto;
+    padding: 2rem 3rem;
+    background: var(--bg-dark);
+    border-radius: 1rem;
+
+    max-width: 500px;
+    background: var(--bg-dark);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: var(--clr-text);
+}
+
+.settings-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--clr-accent);
+}
+
+.setting-item {
+    margin-bottom: 20px;
+}
+
+.setting-item label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+    color: var(--clr-accent);
+}
+
+.setting-item .value {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.edit-input {
+    display: none;
+    padding: 8px;
+    margin-right: 10px;
+    width: 80%;
+}
+
+.edit-btn {
+    padding: 6px 10px;
+    margin-top: 5px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: var(--clr-accent);
+    color: var(--clr-text);
 }

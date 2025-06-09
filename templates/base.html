@@ -6,30 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
 
-    <title>Break-Even-Point-Rechner</title>
+    <title>{{title}} - Break-Even-Point-Rechner</title>
 </head>
-
 
 <body>
     <nav>
         <ul>
-            <li><a href="{{url_for('main.index')}}">Home</a></li>
-            <li><a href="{{url_for('main.bep_calc')}}">BEP-Rechner</a></li>
+            <a href="{{url_for('main.index')}}">
+                <li>Home</li>
+            </a>
+            <a href="{{url_for('main.bep_calc')}}">
+                <li>BEP-Rechner</li>
+            </a>
             <div class="nav-r">
                 {% if current_user.is_admin %}
-                <li><a href="{{url_for('auth.userlist')}}">Userlist</a></li>
+                <a href="{{url_for('auth.users')}}">
+                    <li>Userlist</li>
+                </a>
                 {% endif %}
-
                 {% if current_user.is_authenticated %}
                 <li class="dropbtn">Angemeldet als: {{ current_user.name }}
                     <ul>
-                        <li><a href="{{url_for('auth.change_password')}}">Passwort ändern</a></li>
-                        <li><a href="{{url_for('auth.logout')}}">Abmelden</a></li>
+                        <a href="{{url_for('auth.profile')}}">
+                            <li>Profil</li>
+                        </a>
+                        <a href="{{url_for('main.history')}}">
+                            <li>Verlauf</li>
+                        </a>
+                        <a href="{{url_for('auth.logout')}}" id="signout">
+                            <li>Abmelden</li>
+                        </a>
                     </ul>
                 </li>
                 {% else %}
-                <li><a href="{{url_for('auth.register')}}">Register</a></li>
-                <li><a href="{{url_for('auth.login')}}">Login</a></li>
+                <a href="{{url_for('auth.login')}}"><li>Login</li></a>
                 {% endif %}
             </div>
         </ul>
@@ -37,10 +47,8 @@
 
     <main>
         {% block messages %}
-
         <div id="messages">
             {% for type,message in get_flashed_messages(with_categories=True) %}
-            <!-- From Uiverse.io by andrew-demchenk0 -->
             <div class="flash-{{type}}">
                 <div class="flash_icon_container">
                     <span class="flash_icon-{{type}}"></span>
@@ -60,14 +68,13 @@
 
         {% endblock %}
 
-
-
         {% block content %}
-
         {% endblock %}
     </main>
+
     <script src="{{url_for('static', filename='js/bep.js')}}">
     </script>
+
 </body>
 
 </html>

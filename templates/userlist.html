@@ -4,7 +4,7 @@
 <table>
     <div id="buttons_users">
         <button type="button" id="btn_new" class="btn_users" onclick="location.href=`{{url_for('auth.add_user')}}`;"></button>
-        <button type="button" id="btn_refresh" class="btn_users" onclick="location.href=`{{url_for('auth.userlist')}}`;"></button>
+        <button type="button" id="btn_refresh" class="btn_users" onclick="location.href=`{{url_for('auth.users')}}`;"></button>
     </div>
     <thead>
         <tr>
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for u in content %}
+        {% for u in users %}
         <tr>
             <td>{{u.name}}</td>
             <td>{{u.email}}</td>

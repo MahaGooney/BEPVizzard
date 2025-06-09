@@ -1,5 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
+<br><br>
+
+  <div class="settings-container">
+    <h2>Account Settings</h2>
+
+    <div class="setting-item" id="username-section">
+      <label>Username</label>
+      <span class="value" id="username-display">{{user.name}}</span>
+      <button class="edit-btn" onclick="location.href=`{{url_for('auth.change_username')}}`">Edit</button>
+    </div>
+
+    <div class="setting-item" id="email-section">
+      <label>Email</label>
+      <span class="value" id="email-display">{{user.email}}</span>
+      <button class="edit-btn" onclick="location.href=`{{url_for('auth.change_email')}}`">Edit</button>
+    </div>
+
+    <div class="setting-item" id="password-section">
+      <label>Password</label>
+      <span class="value" id="password-display">••••••••</span>
+      <button class="edit-btn" onclick="location.href=`{{url_for('auth.change_password')}}`">Edit</button>
+    </div>
+  </div>
+
+
+
+
 
 {% endblock %}
