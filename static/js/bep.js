@@ -48,10 +48,43 @@
         }
     }
 
+    function addSliderSync() {
+        const fixkslider = document.getElementById('s_fixkosten');
+        const fixk = document.getElementById('fixkosten');
+        fixkslider.addEventListener('input', () => {
+            fixk.value = fixkslider.value;
+        });
+        fixk.addEventListener('input', () => {
+            fixkslider.value = fixk.value;
+        });
+
+        const varkslider = document.getElementById('s_varkosten');
+        const vark = document.getElementById('varkosten');
+        varkslider.addEventListener('input', () => {
+            vark.value = varkslider.value;
+        });
+        vark.addEventListener('input', () => {
+            varkslider.value = vark.value;
+        });
+
+        const preisslider = document.getElementById('s_preis');
+        const preis = document.getElementById('preis');
+        preisslider.addEventListener('input', () => {
+            preis.value = preisslider.value;
+        });
+        preis.addEventListener('input', () => {
+            preisslider.value = preis.value;
+        });
+
+    }
+
     function main() {
         add_discard_function();
         add_confirm();
         currentpage = window.location.pathname;
+        if (currentpage.endsWith("bep_calc")) {
+            addSliderSync();
+        }
         if (currentpage.endsWith("edit") || currentpage.endsWith("add_user")) {
             var x, i, j, l, ll, selElmnt, a, b, c;
             /* Look for any elements with the class "custom-select": */

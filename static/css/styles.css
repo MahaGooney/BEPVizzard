@@ -116,7 +116,7 @@ nav ul a {
     text-decoration: none;
 }
 
-nav #signout li:hover{
+nav #signout li:hover {
     background-color: red;
 
 }
@@ -146,12 +146,12 @@ nav #signout li:hover{
 }
 
 .flash-success {
-    --clr-success:#339900; 
+    --clr-success: #339900;
     background: var(--clr-success);
 }
 
 .flash-danger {
-    --clr-danger:#cc3300;
+    --clr-danger: #cc3300;
     background: var(--clr-danger);
 }
 
@@ -222,7 +222,7 @@ nav #signout li:hover{
 }
 
 
-/* Formulare (Login/Register/changePW/edituser/newuser) */
+/* Formulare */
 .form {
     margin: 0 auto;
     padding: 2rem 3rem;
@@ -401,6 +401,120 @@ nav #signout li:hover{
 .select-items div:hover,
 .same-as-selected {
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+/* BEP */
+
+.bep-header {
+    width: 100%;
+    padding: 1rem 0rem;
+    background: var(--bg-dark);
+    color: var(--clr-accent);
+    text-align: center;
+}
+
+.bep-settings {
+    width: 100%;
+    background: var(--clr-accent);
+}
+
+.bep-form {
+    background: #212121;
+}
+
+.bep-form input[type="text"],
+.bep-form input[type="number"] {
+    border-radius: 0.5rem;
+    padding: 1rem 0.75rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: var(--bg-mid);
+    outline: 2px solid var(--bg-light);
+    color: var(--clr-text);
+}
+
+
+.bep-form input[type=number]::-webkit-inner-spin-button,
+.bep-form input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.bep-form input[type="number"] {
+    text-align: center;
+    -moz-appearance: textfield;
+}
+
+.bep-form input[type="range"] {
+    -webkit-appearance: none;
+    border-radius: 0.5rem;
+    padding: 1rem 0.75rem;
+    border: none;
+    gap: 0.5rem;
+    background: transparent;
+    outline: 2px solid var(--bg-light);
+}
+
+/* WebKit (Chrome, Safari, Edge) */
+.bep-form input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--clr-accent);
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  margin-top: -7px; /* Zentriert den Thumb vertikal */
+}
+
+/* Firefox */
+input[type=range]::-moz-range-thumb {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  background: var(--clr-accent);
+  cursor: pointer;
+  border: none;
+}
+
+/* Track in Firefox */
+input[type=range]::-moz-range-track {
+  height: 6px;
+  background: var(--bg-mid);
+  border-radius: 5px;
+}
+
+/* Track in Chrome/Safari */
+input[type=range]::-webkit-slider-runnable-track {
+  height: 6px;
+  background: var(--bg-mid);
+  border-radius: 5px;
+  
+}
+
+#bep-controls {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    width: 100%;
+    max-width: 1000px;
+    padding: 1rem;
+}
+
+.bep-control-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.bep-graph {
+    width: 100%;
+    height: 500px;
+    background: var(--clr-accent);
 }
 
 

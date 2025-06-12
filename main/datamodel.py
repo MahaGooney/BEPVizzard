@@ -135,11 +135,22 @@ class BEP:
 
     @property
     def data(self:'BEP') -> dict:
-        pass
+        return {
+            "id":               self.id,
+            "fixkosten":        self.fixkosten,
+            "variable_kosten":  self.variable_kosten,
+            "menge":            self.menge,
+            "preis":            self.preis
+        }
 
     @data.setter
     def data(self: 'BEP', value: dict):
-        pass
+        self.id                 = value["id"]
+        self.fixkosten          = value["fixkosten"]
+        self.variable_kosten    = value["variable_kosten"]
+        self.menge              = value["menge"]
+        self.preis              = value["preis"]
+
 
 
 

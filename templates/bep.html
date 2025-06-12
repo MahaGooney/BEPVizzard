@@ -1,5 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
+<header class="bep-header">
+    <h1> Break-Even-Point Rechner</h1>
+</header>
+<div class="bep-settings">
+    <form action="#" method="POST" class="bep-form">
+        <span>
+            <label for="titel" class="label">Titel</label>
+            <input id="titel" name="titel" value="" type="text" title="Titel für die Berechnung eingeben">
+        </span>
+        <span id="bep-controls">
+            <div class="bep-control-group">
+                <label for="fixkosten" class="label">Fixkosten</label>
+                <input type="range" id="s_fixkosten" name="s_fixkosten" min="0" max="" value="">
+                <input type="number" id="fixkosten" name="fixkosten" value="">
+            </div>
+            <div class="bep-control-group">
+                <label for="varkosten" class="label">Variable Kosten pro Stück</label>
+                <input type="range" id="s_varkosten" name="_varkosten" min="0" max="" value="">
+                <input type="number" id="varkosten" name="varkosten" value="">
+            </div>
+            <div class="bep-control-group">
+                <label for="preis" class="label">Preis pro Stück</label>
+                <input type="range" id="s_preis" name="s_preis" min="0" max="" value="">
+                <input type="number" id="preis" name="preis" value="">
+            </div>
+        </span>
+    </form>
+</div>
+<div class="bep-graph">
+
+</div>
 
 {% endblock %}
