@@ -152,6 +152,20 @@ class BEP:
         self.preis              = value["preis"]
 
 
+    def calculate_bep(self):
+        if(self.menge == None):
+            self.menge = self.fixkosten / (self.preis-self.variable_kosten)
+        elif(self.preis == None):
+            self.preis == self.fixkosten / self.menge + self.variable_kosten
+        else:
+            return False
+        return True
+
+
+
+
+
+
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
@@ -181,6 +195,16 @@ def init_bep() -> bool:
 
 @click.command("init-bep")
 def init_bep_command():
+    """ Hinzufügen von einigen Aufträgen.
+
+    Diese Funktion wird als Command Line Parameter für die Anwendung hizugefügt.
+    Aufruf über:
+        flask --app bep init-bep
+    ruft ebenfalls die auth.init_db Funktion auf, um die Nutzerdaten zu intialisieren
+
+    ACHTUNG:
+    Der Auftruf der Funktion löscht die aktuelle Datenbank und initialisiert sie neu.
+    Nicht auf Produktiven Datenbanken verwenden."""
     answer = init_bep()
     if answer:
         click.echo("BEP-Datenbank initialisiert.")

@@ -6,15 +6,21 @@
     <h2>Sign up</h2>
     <span class="input-span">
         <label for="username" class="label"> Username</label>
-        <input type="text" name="username" id="username" autofocus />
+        <input type="text" name="username" id="username" autofocus required
+            oninvalid="this.setCustomValidity('Bitte geben Sie einen Benutzernamen ein.')"
+            oninput="this.setCustomValidity('')" />
     </span>
     <span class="input-span">
         <label for="email" class="label">Email </label>
-        <input type="email" name="email" id="email" autofocus />
+        <input type="email" name="email" id="email" required
+            oninvalid="this.setCustomValidity('Bitte geben Sie eine Email-Adresse ein.')"
+            oninput="this.setCustomValidity('')" />
     </span>
     <span class="input-span">
         <label for="password" class="label">Password</label>
-        <input type="password" name="password" id="password" />
+        <input type="password" name="password" id="password" required
+            oninvalid="this.setCustomValidity('Bitte geben Sie ihr Passwort ein.')"
+            oninput="this.setCustomValidity('')" />
     </span>
     <br>
     <input class="submit" type="submit" value="Register" name="submit" />

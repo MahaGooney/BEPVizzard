@@ -174,7 +174,7 @@ def change_password():
         if user.validate_password(new_password):
             user.save()
             flash("Passwort wurde erfolgreich geändert.", "success")
-            return redirect(url_for("main.index"))
+            return redirect(url_for("auth.profile"))
         else:
             flash("Passwortänderung fehlgeschlagen. Bitte versuchen Sie es erneut.", "danger")
             return redirect(url_for("auth.change_password"))
@@ -186,17 +186,53 @@ def profile():
     user = User.get_by_id(current_user.id)
     return render_template("profile.html", user = user, title = f"{user.name} - Profil")
 
-@bp.route("/change_username")
+@bp.route("/change_username", methods=["GET", "POST"])
 @login_required
 def change_username():
-    flash("Die Funktion zum Ändern des Benutzernamens ist noch nicht implementiert.", "warning")
-    return redirect(url_for("auth.profile"))
+    user = current_user
+    if request.method == "POST":
+        option = request.form["submit"]
+        password = request.form["password"]
+        new_username = request.form["username"]
+        if option == "cancel":
+            return redirect(url_for("auth.profile"))
+        if not user.validate_password(password):
+            flash("Passwort ist falsch.","danger")
+            return redirect(url_for("auth.change_username"))
+        existing = User.get_by_name(new_username)
+        if existing:
+            flash(f"Username ist bereits vergeben.", "danger")
+            return redirect(url_for("auth.change_username"))
+        usr = User.get_by_name(user.name)
+        usr.name = new_username
+        usr.save()
+        flash(f"Benutzername geändert.", "success")
+        return redirect(url_for("auth.profile"))
+    return render_template("change_username.html", title="Benutzername ändern")
 
-@bp.route("/change_email")
+@bp.route("/change_email", methods=["GET", "POST"])
 @login_required
 def change_email():
-    flash("Die Funktion zum Ändern der E-Mail-Adresse ist noch nicht implementiert.", "warning")
-    return redirect(url_for("auth.profile"))
+    user = current_user
+    if request.method == "POST":
+        option = request.form["submit"]
+        password = request.form["password"]
+        new_email = request.form["email"]
+        if option == "cancel":
+            return redirect(url_for("auth.profile"))
+        if not user.validate_password(password):
+            flash("Passwort ist falsch.","danger")
+            return redirect(url_for("auth.change_email"))
+        existing = User.get_by_name(new_email)
+        if existing:
+            flash(f"Email wird bereits verwendet.", "danger")
+            return redirect(url_for("auth.change_email"))
+        usr = User.get_by_name(user.email)
+        usr.email = new_email
+        usr.save()
+        flash(f"Email-Adresse geändert.", "success")
+        return redirect(url_for("auth.profile"))
+    return render_template("change_email.html", title="Email ändern")
 
 @bp.route("/register", methods=["GET", "POST"])
 def register():

@@ -78,71 +78,129 @@
 
     }
 
+    function addConfirmPasswordCheck() {
+        const new_password = document.getElementById('new_password');
+        const confirm_password = document.getElementById('confirm_password');
+        const form = document.getElementById('change-password-form');
+
+        let lastClickedButton = null;
+
+        // Merken, welcher Button zuletzt geklickt wurde
+        form.querySelectorAll('button[name="submit"]').forEach(button => {
+            button.addEventListener('click', (e) => {
+                lastClickedButton = e.target;
+            });
+        });
+
+        function validatePasswordMatch(setValidity = false) {
+            const match = new_password.value === confirm_password.value && new_password.value !== "";
+            if (match) {
+                confirm_password.classList.remove('no-match');
+                // Validity zurücksetzen
+                if (setValidity) confirm_password.setCustomValidity("");
+            } else {
+                confirm_password.classList.add('no-match');
+                if (setValidity) {
+                    confirm_password.setCustomValidity("Die Passwörter stimmen nicht überein.");
+                } else {
+                    // Zwischenzeitlich keine Meldung
+                    confirm_password.setCustomValidity("");
+                }
+            }
+            return match;
+        }
+
+        // Eingabe: nur Farbe
+        confirm_password.addEventListener('input', () => validatePasswordMatch(false));
+
+        // Beim Submit: mit Validity-Message
+        form.addEventListener('submit', function (e) {
+            const isRealSubmit = lastClickedButton?.value === "submit";
+            if (isRealSubmit) {
+                const match = validatePasswordMatch(true);
+                if (!match) {
+                    confirm_password.reportValidity();
+                    e.preventDefault();
+                }
+            } else {
+                // Bei "cancel" sicherheitshalber Validierungszustand entfernen
+                confirm_password.setCustomValidity("");
+            }
+        });
+    }
+
+    function addUserEditSelect() {
+        var x, i, j, l, ll, selElmnt, a, b, c;
+        /* Look for any elements with the class "custom-select": */
+        x = document.getElementsByClassName("custom-select");
+        l = x.length;
+        for (i = 0; i < l; i++) {
+            selElmnt = x[i].getElementsByTagName("select")[0];
+            ll = selElmnt.length;
+            /* For each element, create a new DIV that will act as the selected item: */
+            a = document.createElement("DIV");
+            a.setAttribute("class", "select-selected");
+            a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+            x[i].appendChild(a);
+            /* For each element, create a new DIV that will contain the option list: */
+            b = document.createElement("DIV");
+            b.setAttribute("class", "select-items select-hide");
+            for (j = 1; j < ll; j++) {
+                /* For each option in the original select element,
+                create a new DIV that will act as an option item: */
+                c = document.createElement("DIV");
+                c.innerHTML = selElmnt.options[j].innerHTML;
+                c.addEventListener("click", function (e) {
+                    /* When an item is clicked, update the original select box,
+                    and the selected item: */
+                    var y, i, k, s, h, sl, yl;
+                    s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+                    sl = s.length;
+                    h = this.parentNode.previousSibling;
+                    for (i = 0; i < sl; i++) {
+                        if (s.options[i].innerHTML == this.innerHTML) {
+                            s.selectedIndex = i;
+                            h.innerHTML = this.innerHTML;
+                            y = this.parentNode.getElementsByClassName("same-as-selected");
+                            yl = y.length;
+                            for (k = 0; k < yl; k++) {
+                                y[k].removeAttribute("class");
+                            }
+                            this.setAttribute("class", "same-as-selected");
+                            break;
+                        }
+                    }
+                    h.click();
+                });
+                b.appendChild(c);
+            }
+            x[i].appendChild(b);
+            a.addEventListener("click", function (e) {
+                /* When the select box is clicked, close any other select boxes,
+                and open/close the current select box: */
+                e.stopPropagation();
+                closeAllSelect(this);
+                this.nextSibling.classList.toggle("select-hide");
+                this.classList.toggle("select-arrow-active");
+            });
+        }
+        /* If the user clicks anywhere outside the select box,
+        then close all select boxes: */
+        document.addEventListener("click", closeAllSelect);
+    }
+
     function main() {
         add_discard_function();
         add_confirm();
         currentpage = window.location.pathname;
+        if (currentpage.endsWith("change_password")) {
+            addConfirmPasswordCheck();
+        }
         if (currentpage.endsWith("bep_calc")) {
             addSliderSync();
         }
         if (currentpage.endsWith("edit") || currentpage.endsWith("add_user")) {
-            var x, i, j, l, ll, selElmnt, a, b, c;
-            /* Look for any elements with the class "custom-select": */
-            x = document.getElementsByClassName("custom-select");
-            l = x.length;
-            for (i = 0; i < l; i++) {
-                selElmnt = x[i].getElementsByTagName("select")[0];
-                ll = selElmnt.length;
-                /* For each element, create a new DIV that will act as the selected item: */
-                a = document.createElement("DIV");
-                a.setAttribute("class", "select-selected");
-                a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-                x[i].appendChild(a);
-                /* For each element, create a new DIV that will contain the option list: */
-                b = document.createElement("DIV");
-                b.setAttribute("class", "select-items select-hide");
-                for (j = 1; j < ll; j++) {
-                    /* For each option in the original select element,
-                    create a new DIV that will act as an option item: */
-                    c = document.createElement("DIV");
-                    c.innerHTML = selElmnt.options[j].innerHTML;
-                    c.addEventListener("click", function (e) {
-                        /* When an item is clicked, update the original select box,
-                        and the selected item: */
-                        var y, i, k, s, h, sl, yl;
-                        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-                        sl = s.length;
-                        h = this.parentNode.previousSibling;
-                        for (i = 0; i < sl; i++) {
-                            if (s.options[i].innerHTML == this.innerHTML) {
-                                s.selectedIndex = i;
-                                h.innerHTML = this.innerHTML;
-                                y = this.parentNode.getElementsByClassName("same-as-selected");
-                                yl = y.length;
-                                for (k = 0; k < yl; k++) {
-                                    y[k].removeAttribute("class");
-                                }
-                                this.setAttribute("class", "same-as-selected");
-                                break;
-                            }
-                        }
-                        h.click();
-                    });
-                    b.appendChild(c);
-                }
-                x[i].appendChild(b);
-                a.addEventListener("click", function (e) {
-                    /* When the select box is clicked, close any other select boxes,
-                    and open/close the current select box: */
-                    e.stopPropagation();
-                    closeAllSelect(this);
-                    this.nextSibling.classList.toggle("select-hide");
-                    this.classList.toggle("select-arrow-active");
-                });
-            }
-            /* If the user clicks anywhere outside the select box,
-            then close all select boxes: */
-            document.addEventListener("click", closeAllSelect);
+            addUserEditSelect();
         }
     }
 

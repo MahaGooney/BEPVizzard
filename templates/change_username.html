@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br><br>
+
+<form class="form" method="POST" action="#">
+  <h2>Benutzername ändern</h2>
+  <span class="input-span">
+    <label for="username" class="label">Neuer Benutzername</label>
+    <input type="text" name="username" id="username" autofocus title="Neuen Benutzername eingeben." required
+      oninvalid="this.setCustomValidity('Bitte geben Sie einen Benutzernamen ein.')"
+      oninput="this.setCustomValidity('')" />
+  </span>
+  <span class="input-span">
+    <label for="password" class="label">Password zur Kontrolle</label>
+    <input type="password" name="password" id="password" title="Passwort zur Kontrolle eingeben." required
+      oninvalid="this.setCustomValidity('Bitte geben Sie ihr Passwort ein.')" oninput="this.setCustomValidity('')" />
+  </span>
+  <br>
+  <button class="submit" id="confirm" name="submit" value="save">Neuen Benutzername speichern</button>
+  <button class="cancel" id="cancel" name="submit" value="cancel" formnovalidate>Abbruch</button>
+</form>
+
+
+{% endblock %}

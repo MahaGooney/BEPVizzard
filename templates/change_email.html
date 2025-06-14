@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br><br>
+
+<form class="form" method="POST" action="#">
+    <h2>Email-Adresse ändern</h2>
+    <span class="input-span">
+        <label for="email" class="label">Neue Email</label>
+        <input type="email" name="email" id="email" autofocus title="Neue Email-Adresse eingeben." required
+            oninvalid="this.setCustomValidity('Bitte geben Sie eine Email-Adresse ein.')"
+            oninput="this.setCustomValidity('')" />
+    </span>
+    <span class="input-span">
+        <label for="password" class="label">Password zur Kontrolle</label>
+        <input type="password" name="password" id="password" title="Passwort zur Kontrolle eingeben." required
+            oninvalid="this.setCustomValidity('Bitte geben Sie ihr Passwort ein.')"
+            oninput="this.setCustomValidity('')" />
+    </span>
+    <br>
+    <button class="submit" id="confirm" name="submit" value="save">Neue Email-Adresse speichern</button>
+    <button class="cancel" id="cancel" name="submit" value="cancel" formnovalidate>Abbruch</button>
+</form>
+
+{% endblock %}

@@ -11,23 +11,25 @@
     <span class="input-span">
         <label for="username" class="label">Name</label>
         <input class="input" type="text" id="username" name="name" value="{% if user %}{{ user.name }}{% endif %}"
-            placeholder="" title="Geben Sie einen Benutzernamen ein. Dieser muss eindeutig sein." autofocus>
+            placeholder="" title="Geben Sie einen Benutzernamen ein. Dieser muss eindeutig sein." autofocus required
+            oninvalid="this.setCustomValidity('Bitte geben Sie einen Benutzernamen ein.')" oninput="this.setCustomValidity('')" />
     </span>
     <span class="input-span">
         <label for="email" class="label">Email</label>
         <input class="input" id="email" name="email" value="{% if user %}{{ user.email }}{% endif %}" type="email"
-            placeholder="" title="Geben Sie die email des Nutzers ein. Diese muss eindeutig sein.">
+            placeholder="" title="Geben Sie die email des Nutzers ein. Diese muss eindeutig sein." required
+            oninvalid="this.setCustomValidity('Bitte geben Sie eine Email ein.')" oninput="this.setCustomValidity('')" />
     </span>
     <span class="input-span">
         <label for="role" class="label">Benutzerrolle</label>
         <div class="custom-select">
-        <select class="input" id="role" name="role">
-            {% for r in roles %}
-            <option value="{{r.name}}" {% if user %} {% if r.name==user.role.name %}selected{% endif %} {% else %} {% if
-                r.default==True %}selected{% endif %} {% endif %}>
-                {{r.name}}</option>
-            {% endfor %}
-        </select>
+            <select class="input" id="role" name="role">
+                {% for r in roles %}
+                <option value="{{r.name}}" {% if user %} {% if r.name==user.role.name %}selected{% endif %} {% else %}
+                    {% if r.default==True %}selected{% endif %} {% endif %}>
+                    {{r.name}}</option>
+                {% endfor %}
+            </select>
         </div>
     </span>
     <button id="confirm" name="submit" value="save" class="submit">
@@ -37,6 +39,6 @@
         Benutzer hinzufügen
         {% endif %}
     </button>
-    <button id="cancel" name="submit" value="cancel" class="cancel">Abbruch</button>
+    <button id="cancel" name="submit" value="cancel" class="cancel" formnovalidate>Abbruch</button>
 </form>
 {% endblock %}
